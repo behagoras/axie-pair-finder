@@ -8,9 +8,9 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={()=><>Hello</>} />
         <Route exact path="/genes" component={Genes} />
         <Route exact path="/gene-search" component={GeneSearch} />
+        <Route path="/" component={() => <>Hello</>} />
       </Switch>
     </Router>
   );

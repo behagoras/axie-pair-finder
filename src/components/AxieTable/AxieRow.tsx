@@ -1,7 +1,7 @@
-import { TableCell, TableRow } from '@material-ui/core'
-import { Part } from 'agp-npm/dist/models/part'
-import React, { ReactElement } from 'react'
-import getColor from '../../utils/getColor'
+import { TableCell, TableRow } from '@material-ui/core';
+import { Part } from 'agp-npm/dist/models/part';
+import React, { ReactElement } from 'react';
+import getColor from '../../utils/getColor';
 
 interface Props {
   part: Part;
@@ -19,6 +19,6 @@ export default function GeneRow({ part, name }: Props): ReactElement {
         {part.r1.name}
       </TableCell>
       <TableCell align="center" style={{ color: getColor(part.r2.cls) }}>{part.r2.name}</TableCell>
-    </TableRow >
-  )
+    </TableRow>
+  );
 }

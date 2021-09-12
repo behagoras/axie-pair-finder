@@ -1,25 +1,24 @@
 /* eslint-disable no-loop-func */
-import { AxieGene } from "agp-npm/dist/axie-gene";
-import { PartGene } from "agp-npm/dist/models/part";
-import { Axie } from "../types/axies";
+import { AxieGene } from 'agp-npm/dist/axie-gene';
+import { PartGene } from 'agp-npm/dist/models/part';
+import { Axie } from '../types/axies';
 
 function constructQuery() {
-  let query = "query GetAxieBriefList($criteria: AxieSearchCriteria) { ";
+  let query = 'query GetAxieBriefList($criteria: AxieSearchCriteria) { ';
+  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < 30; i++) {
     query += `ax${i}: axies(auctionType: Sale, sort: PriceAsc, criteria: $criteria, from: ${i * 100
-      }, size: 100) `;
-    query += "{ results { id genes auction { currentPrice } } }\n";
+    }, size: 100) `;
+    query += '{ results { id genes auction { currentPrice } } }\n';
   }
-  query += " }";
+  query += ' }';
   return query;
 }
 
-const endpoint = "https://axieinfinity.com/graphql-server-v2/graphql";
+const endpoint = 'https://axieinfinity.com/graphql-server-v2/graphql';
 const breedCount = [0];
 
-const classes = ["Reptile"];
-
-
+const classes:string[] = [];
 
 interface Args {
   Back?: PartGene;
@@ -28,7 +27,9 @@ interface Args {
   Tail?: PartGene;
 }
 
-export const getGenes = ({ Back, Horn, Mouth, Tail }: Args): Promise<Axie[]> => {
+export const getGenes = ({
+  Back, Horn, Mouth, Tail,
+}: Args): Promise<Axie[]> => {
   // const parts = [
   //   // "tail-thorny-caterpillar",
   //   // "mouth-tiny-turtle",
@@ -37,37 +38,36 @@ export const getGenes = ({ Back, Horn, Mouth, Tail }: Args): Promise<Axie[]> => 
   //   'tail-yam'
   // ];
   const parts = [];
-  Back && parts.push(`back-${Back.name}`);
-  Horn && parts.push(`horn-${Horn.name}`);
-  Mouth && parts.push(`mouth-${Mouth.name}`);
-  Tail && parts.push(`tail${Tail.name}`);
+  if (Back) parts.push(`back-${Back.name}`);
+  if (Horn) parts.push(`horn-${Horn.name}`);
+  if (Mouth) parts.push(`mouth-${Mouth.name}`);
+  if (Tail) parts.push(`tail${Tail.name}`);
 
   const body = {
-    operationName: "GetAxieBriefList",
+    operationName: 'GetAxieBriefList',
     variables: {
-      criteria: { classes: classes, breedCount: breedCount, parts: parts },
+      criteria: { classes, breedCount, parts },
     },
     query: constructQuery(),
   };
 
   return fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
     .then((res) => res.json()
-      .then((body) => {
-        console.log('file: getGenes.ts ~ line 59 ~ .then ~ body', body)
-        const axiesWithGenes: Axie[] = body.data.ax0.results.map((axie: any) => {
-          // console.log('file: getGenes.ts ~ line 53 ~ axiesWithGenes ~ axie', axie)
+      .then((data) => {
+        const axiesWithGenes: Axie[] = data.data.ax0.results.map((axie: any) => {
           const genes = new AxieGene(axie.genes);
           return {
             id: axie.id,
             price: axie.auction.currentPrice,
             genes,
-          } as Axie
+          } as Axie;
         });
         return axiesWithGenes;
-      })
-    );
+      }));
 };
+
+export default getGenes;

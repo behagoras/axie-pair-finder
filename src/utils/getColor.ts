@@ -1,6 +1,5 @@
-import {AXIE_TYPES, TYPES} from '../types/axies'
-
+import { AxieTypes, TYPES } from '../types/axies';
 
 export default function getColor(type: string) {
-  return TYPES[type as AXIE_TYPES].color
+  return TYPES[type as AxieTypes].color;
 }

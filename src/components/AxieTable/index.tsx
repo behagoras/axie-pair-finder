@@ -1,1 +1,1 @@
-export {default} from './AxieTable'
+export { default } from './AxieTable';

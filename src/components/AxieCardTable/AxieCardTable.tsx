@@ -1,7 +1,9 @@
-import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core'
-import React, { ReactElement } from 'react'
-import { Card } from '../../types/axies'
-import AxieCard from './AxieCard'
+import {
+  TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody,
+} from '@material-ui/core';
+import React, { ReactElement } from 'react';
+import { Card } from '../../types/axies';
+import AxieCard from './AxieCard';
 
 interface Props {
   cards: Card[]
@@ -14,8 +16,9 @@ export default function AxieCardTable({ cards }: Props): ReactElement {
       style={{
         maxWidth: '100%',
         width: 500,
-        margin: 'auto'
-      }}>
+        margin: 'auto',
+      }}
+    >
       <Table aria-label="simple table" stickyHeader>
         <TableHead>
           <TableRow>
@@ -25,9 +28,9 @@ export default function AxieCardTable({ cards }: Props): ReactElement {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.entries(cards).map(([key, value]) => (<AxieCard card={value} />))}
+          {Object.entries(cards).map(([, value]) => (<AxieCard card={value} />))}
         </TableBody>
       </Table>
     </TableContainer>
-  )
+  );
 }

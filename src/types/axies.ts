@@ -1,7 +1,6 @@
-import { AxieGene } from "agp-npm/dist/axie-gene";
+import { AxieGene } from 'agp-npm/dist/axie-gene';
 
-
-export enum AXIE_TYPES {
+export enum AxieTypes {
   PLANT = 'plant',
   AQUATIC = 'aquatic',
   BUG = 'bug',
@@ -41,40 +40,38 @@ export interface Card {
   chain_only: boolean;
 }
 
-
-export const TYPES: Record<AXIE_TYPES, Type> = {
+export const TYPES: Record<AxieTypes, Type> = {
   plant: {
-    color: 'rgb(108, 192, 0)'
+    color: 'rgb(108, 192, 0)',
   },
   aquatic: {
-    color: 'rgb(0, 184, 206)'
+    color: 'rgb(0, 184, 206)',
   },
   bug: {
-    color: 'rgb(255, 83, 65)'
+    color: 'rgb(255, 83, 65)',
   },
   bird: {
-    color:'rgb(255, 139, 189)'
+    color: 'rgb(255, 139, 189)',
   },
   beast: {
     color: 'rgb(255, 184, 18)',
   },
   reptile: {
-    color: 'rgb(200, 138, 224)'
+    color: 'rgb(200, 138, 224)',
   },
   dusk: {
-    color: 'rgb(0, 0, 0)'
+    color: 'rgb(0, 0, 0)',
   },
   dawn: {
-    color: 'rgb(0, 0, 0)'
+    color: 'rgb(0, 0, 0)',
   },
   mech: {
-    color: 'rgb(0, 0, 0)'
-  }
-}
+    color: 'rgb(0, 0, 0)',
+  },
+};
 
 export interface Axie {
   id: string;
   genes: AxieGene;
   price: string;
- }
-
+}
