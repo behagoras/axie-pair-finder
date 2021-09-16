@@ -1,16 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import {
-  BrowserRouter as Router, Link, Route, Switch,
+  BrowserRouter as Router, Route, Switch,
 } from 'react-router-dom';
+import NavBar from './components/NavBar/NavBar';
 import pages from './pages';
 
 function App() {
   return (
     <Router>
-      <ul>
-        {pages.map(({ path }) => (<li><Link to={path}>{path}</Link></li>))}
-      </ul>
+      <NavBar />
       <Switch>
         {pages.map(({ component, exact, path }) => (
           <Route

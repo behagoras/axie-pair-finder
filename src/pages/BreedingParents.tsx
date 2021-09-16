@@ -1,12 +1,12 @@
 /* eslint-disable max-len */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/no-unused-prop-types */
+import { Button } from '@material-ui/core';
 import { Formik } from 'formik';
 import React, { ReactElement } from 'react';
 import AxieTable from '../components/AxieTable';
-import CardSelector from '../components/CardSelector';
-import InputNumber from '../components/InputNumber';
-import SpecieSelector from '../components/SpecieSelector';
+import Filters from '../components/Filters';
+import LayoutGeneFinder from '../components/LayoutGeneFinder';
 import useFilterParents from '../hooks/useFilterParents';
 import { GeneSearchProps } from '../types/axies';
 import getPrices from '../utils/getPrices';
@@ -18,37 +18,18 @@ export default function BreedingParents(props: GeneSearchProps): ReactElement {
       initialValues={props}
       onSubmit={() => { }}
     >
-
-      {({ values }) => {
+      {({ values, handleSubmit }) => {
         const pairs = useFilterParents({ values });
-
         return (
-          <>
-            <div>
-              <div style={{ display: 'flex' }}>
-                <CardSelector part="Back" />
-                <CardSelector part="Mouth" />
-                <CardSelector part="Horn" />
-                <CardSelector part="Tail" />
-              </div>
-              <div style={{ display: 'flex' }}>
-                <SpecieSelector name="species" />
-                <SpecieSelector name="Ears" />
-                <SpecieSelector name="Eyes" />
-              </div>
-              <div style={{ display: 'flex' }}>
-                <InputNumber name="fromPrice" />
-                <InputNumber name="toPrice" />
-              </div>
-            </div>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'ifr',
-              // width: '100%',
-              gridGap: 32,
-            }}
-            >
-              {
+          <LayoutGeneFinder
+            filtersComponent={<Filters />}
+            footer={(
+              <Button variant="contained" onClick={() => handleSubmit()}>
+                Submit
+              </Button>
+            )}
+          >
+            {
                 pairs.map((pair) => pair?.father && pair?.mother && (
                   <div style={{
                     display: 'grid', gridTemplateColumns: 'auto auto auto', gridGap: 32, justifyContent: 'center', alignItems: 'center',
@@ -72,10 +53,7 @@ export default function BreedingParents(props: GeneSearchProps): ReactElement {
                   </div>
                 ))
               }
-            </div>
-            <pre>{JSON.stringify(values, null, 2)}</pre>
-
-          </>
+          </LayoutGeneFinder>
         );
       }}
     </Formik>

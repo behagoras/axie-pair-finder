@@ -28,7 +28,6 @@ export default function SpecieSelector({ name }:{ name:string }): ReactElement {
           console.log({ option });
           return option.name;
         }}
-        style={{ width: 300 }}
         // eslint-disable-next-line react/jsx-props-no-spreading
         renderInput={(params) => <TextField {...params} variant="outlined" label={name} placeholder={name} />}
       />

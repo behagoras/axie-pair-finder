@@ -22,7 +22,6 @@ export default function CardSelector({ part }: Props): ReactElement {
         id="combo-box-demo"
         options={filteredCards}
         getOptionLabel={(option) => option.name}
-        style={{ width: 300 }}
         // eslint-disable-next-line react/jsx-props-no-spreading
         renderInput={(params) => <TextField {...params} label={part} variant="outlined" />}
       />

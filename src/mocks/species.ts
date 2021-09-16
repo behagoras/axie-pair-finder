@@ -37,6 +37,36 @@ const _cuckooFish:any = {
   eyes: ['Aquatic', 'Bird'],
 };
 
+const _shielded:any = {
+  species: [
+    'Reptile',
+  ],
+  Back: {
+    name: 'bone-sail',
+    type: 'reptile',
+  },
+  Mouth: {
+    name: 'tiny-turtle',
+    type: 'reptile',
+  },
+  Horn: {
+    name: 'incisor',
+    type: 'reptile',
+  },
+  Tail: {
+    name: 'thorny-cattepilar',
+    type: 'bug',
+  },
+  Ears: [
+    'Aquatic',
+    'Bird',
+  ],
+  Eyes: [
+    'Aquatic',
+    'Bird',
+  ],
+};
+
 const _mechBeast:any = {
   species: ['Mech'],
   Back: {
@@ -57,3 +87,4 @@ const _mechBeast:any = {
 export const mechBeast: GeneSearchProps = _mechBeast;
 export const poisonDusk: GeneSearchProps = _poisonDusk;
 export const cuckooFish: GeneSearchProps = _cuckooFish;
+export const shielded: GeneSearchProps = _shielded;

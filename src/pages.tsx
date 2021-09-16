@@ -6,7 +6,7 @@ import GeneSearch from './pages/GeneSearch';
 
 const geneArray = Object.entries(Species);
 
-interface RoutingProps {
+export interface RoutingProps {
   path: string;
   component: JSX.Element;
   exact:boolean,
