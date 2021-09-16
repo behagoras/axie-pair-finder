@@ -1,12 +1,10 @@
 import {
   Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
 } from '@material-ui/core';
-import { PartGene } from 'agp-npm/dist/models/part';
-import { useFormikContext } from 'formik';
 import React, { ReactElement } from 'react';
 import { Axie } from '../../types/axies';
-import calculatePurity from '../../utils/calculatePurity';
 import getColor from '../../utils/getColor';
+import twoDecimals from '../../utils/twoDigits';
 import GeneRow from './AxieRow';
 
 interface Props {
@@ -14,14 +12,9 @@ interface Props {
 }
 
 export default function AxieTable({ axie }: Props): ReactElement {
-  const { values } = useFormikContext<{
-    Back?: PartGene;
-    Mouth?: PartGene;
-    Horn?: PartGene;
-    Tail?: PartGene;
-  }>();
-  const { genes } = axie;
-  const purity = calculatePurity(genes, values);
+  const { genes, purity } = axie;
+  const priceEth = Math.floor((+axie.price / 1000000000000000000) * 1000) / 1000;
+  const priceUsd = Math.floor(priceEth * 3337);
   return (
     <TableContainer
       component={Paper}
@@ -41,7 +34,7 @@ export default function AxieTable({ axie }: Props): ReactElement {
       >
         <div>{axie.genes.cls}</div>
         <div>
-          {purity}
+          {twoDecimals(purity)}
           %
         </div>
         <img
@@ -49,6 +42,11 @@ export default function AxieTable({ axie }: Props): ReactElement {
           src={`https://storage.googleapis.com/assets.axieinfinity.com/axies/${axie.id}/axie/axie-full-transparent.png`}
           alt={axie.id}
         />
+        <div>{priceEth}</div>
+        <div>
+          $
+          {priceUsd}
+        </div>
         <div>{axie.id}</div>
       </div>
       <Table aria-label="simple table" stickyHeader>

@@ -2,6 +2,7 @@
 import { AxieGene } from 'agp-npm/dist/axie-gene';
 import { PartGene } from 'agp-npm/dist/models/part';
 import { Axie } from '../types/axies';
+import { calculateBreakdownPurity } from './calculatePurity';
 
 function constructQuery() {
   let query = 'query GetAxieBriefList($criteria: AxieSearchCriteria) { ';
@@ -18,35 +19,27 @@ function constructQuery() {
 const endpoint = 'https://axieinfinity.com/graphql-server-v2/graphql';
 const breedCount = [0];
 
-const classes:string[] = [];
-
 interface Args {
   Back?: PartGene;
   Mouth?: PartGene;
   Horn?: PartGene;
   Tail?: PartGene;
+  species?: string[];
 }
 
-export const getGenes = ({
-  Back, Horn, Mouth, Tail,
-}: Args): Promise<Axie[]> => {
-  // const parts = [
-  //   // "tail-thorny-caterpillar",
-  //   // "mouth-tiny-turtle",
-  //   // "horn-lagging",
-  //   // "back-snail-shell",
-  //   'tail-yam'
-  // ];
+export const getAxies = ({
+  Back, Horn, Mouth, Tail, species,
+}: Args, omit?:Args): Promise<Axie[]> => {
   const parts = [];
   if (Back) parts.push(`back-${Back.name}`);
   if (Horn) parts.push(`horn-${Horn.name}`);
   if (Mouth) parts.push(`mouth-${Mouth.name}`);
-  if (Tail) parts.push(`tail${Tail.name}`);
+  if (Tail) parts.push(`tail-${Tail.name}`);
 
   const body = {
     operationName: 'GetAxieBriefList',
     variables: {
-      criteria: { classes, breedCount, parts },
+      criteria: { classes: species, breedCount, parts },
     },
     query: constructQuery(),
   };
@@ -58,16 +51,23 @@ export const getGenes = ({
   })
     .then((res) => res.json()
       .then((data) => {
-        const axiesWithGenes: Axie[] = data.data.ax0.results.map((axie: any) => {
+        const axiesWithGenes: Axie[] = data?.data?.ax0?.results?.map((axie: any) => {
+          if (axie.genes.length === 0) return null;
           const genes = new AxieGene(axie.genes);
+          const breakdownPurity = calculateBreakdownPurity(genes, {
+            Back, Horn, Mouth, Tail, ...omit,
+          });
+          const { purity } = breakdownPurity;
           return {
             id: axie.id,
             price: axie.auction.currentPrice,
             genes,
+            purity,
+            breakdownPurity,
           } as Axie;
         });
         return axiesWithGenes;
       }));
 };
 
-export default getGenes;
+export default getAxies;

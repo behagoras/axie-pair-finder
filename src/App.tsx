@@ -1,16 +1,26 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
-import Genes from './pages/Genes';
-import GeneSearch from './pages/GeneSearch';
+import {
+  BrowserRouter as Router, Link, Route, Switch,
+} from 'react-router-dom';
+import pages from './pages';
 
 function App() {
   return (
     <Router>
+      <ul>
+        {pages.map(({ path }) => (<li><Link to={path}>{path}</Link></li>))}
+      </ul>
       <Switch>
-        <Route exact path="/genes" component={Genes} />
-        <Route exact path="/gene-search" component={GeneSearch} />
-        <Route path="/" component={() => <>Hello</>} />
+        {pages.map(({ component, exact, path }) => (
+          <Route
+            key={path}
+            path={path}
+            exact={exact}
+          >
+            {component}
+          </Route>
+        ))}
       </Switch>
     </Router>
   );

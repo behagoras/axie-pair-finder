@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/no-unused-prop-types */
 import { Formik } from 'formik';
@@ -6,20 +7,20 @@ import AxieTable from '../components/AxieTable';
 import CardSelector from '../components/CardSelector';
 import InputNumber from '../components/InputNumber';
 import SpecieSelector from '../components/SpecieSelector';
-import useFilterAxies from '../hooks/useFilterAxies';
+import useFilterParents from '../hooks/useFilterParents';
 import { GeneSearchProps } from '../types/axies';
+import getPrices from '../utils/getPrices';
 // import { getAxies } from '../utils/getAxies';
 
-export default function GeneSearch(props:GeneSearchProps): ReactElement {
+export default function BreedingParents(props: GeneSearchProps): ReactElement {
   return (
     <Formik
       initialValues={props}
-      onSubmit={() => {}}
+      onSubmit={() => { }}
     >
 
       {({ values }) => {
-        console.log('file: GeneSearch.tsx ~ line 21 ~ GeneSearch ~ values', values);
-        const axies = useFilterAxies({ values });
+        const pairs = useFilterParents({ values });
 
         return (
           <>
@@ -41,12 +42,35 @@ export default function GeneSearch(props:GeneSearchProps): ReactElement {
               </div>
             </div>
             <div style={{
-              display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', width: '100%', gridGap: 32,
+              display: 'grid',
+              gridTemplateColumns: 'ifr',
+              // width: '100%',
+              gridGap: 32,
             }}
             >
               {
-                axies
-                  .map((axie) => (<AxieTable axie={axie} />))
+                pairs.map((pair) => pair?.father && pair?.mother && (
+                  <div style={{
+                    display: 'grid', gridTemplateColumns: 'auto auto auto', gridGap: 32, justifyContent: 'center', alignItems: 'center',
+                  }}
+                  >
+                    <AxieTable axie={pair?.father} />
+                    <AxieTable axie={pair?.mother} />
+                    <div style={{ fontSize: 32 }}>
+                      <div>
+                        {pair.purity}
+                        %
+                      </div>
+                      <div>
+                        {
+                          (pair?.father?.price && pair?.mother?.price)
+                            ? getPrices(pair.father.price).priceUsd + getPrices(pair.mother.price).priceUsd
+                            : 0
+                        }
+                      </div>
+                    </div>
+                  </div>
+                ))
               }
             </div>
             <pre>{JSON.stringify(values, null, 2)}</pre>
