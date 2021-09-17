@@ -22,20 +22,22 @@ interface Pair{
 export default function useFilterParents({ values }: { values: GeneSearchProps }) {
   const [axies, setAxies] = useState<Axie[]>([]);
   const [pairs, setPairs] = useState<Pair[]>([]);
-  useEffect(() => {
+
+  const fetchAllAxies = () => {
+    // eslint-disable-next-line no-console
+    console.log('values', values);
     getAllPossibleAxies(values).then((_axies) => {
       setAxies(
         filterAxies(_axies, values),
       );
     });
-  }, [
-    values.Tail,
-    values.Back,
-    values.Mouth,
-    values.Horn,
-    values.Ears,
-    values.Eyes,
-  ]);
+  };
+
+  useEffect(() => {
+    if (values.Tail || values.Back || values.Mouth || values.Horn || values.Ears || values.Eyes || values.ears || values.eyes || values.species) {
+      fetchAllAxies();
+    }
+  }, []);
 
   useEffect(() => {
     const _pairs = axies
@@ -92,5 +94,5 @@ export default function useFilterParents({ values }: { values: GeneSearchProps }
     );
   }, [values.fromPrice, values.toPrice]);
 
-  return pairs;
+  return { pairs, fetchAllAxies };
 }

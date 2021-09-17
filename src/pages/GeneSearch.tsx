@@ -17,7 +17,6 @@ export default function GeneSearch(props:GeneSearchProps): ReactElement {
       onSubmit={() => {}}
     >
       {({ values, handleSubmit }) => {
-        console.log('file: GeneSearch.tsx ~ line 21 ~ GeneSearch ~ values', values);
         const axies = useFilterAxies({ values });
         return (
           <LayoutGeneFinder

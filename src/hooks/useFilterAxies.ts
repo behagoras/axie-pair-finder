@@ -14,7 +14,6 @@ export default function useFilterAxies({ values }: { values: GeneSearchProps }) 
   const [axies, setAxies] = useState<Axie[]>([]);
   useEffect(() => {
     getAllPossibleAxies(values).then((_axies) => {
-      console.log('file: useFilterAxies.ts ~ line 17 ~ getAllPossibleAxies ~ values', values);
       setAxies(
         filterAxies(_axies, values),
       );
@@ -31,8 +30,6 @@ export default function useFilterAxies({ values }: { values: GeneSearchProps }) 
     setAxies(
       filterAxies(axies, values),
     );
-
-    console.log('file: useFilterAxies.ts ~ line 35 ~ useFilterAxies ~ values', values);
   }, [values.fromPrice, values.toPrice]);
 
   return axies;

@@ -24,10 +24,7 @@ export default function SpecieSelector({ name }:{ name:string }): ReactElement {
         limitTags={2}
         id="combo-box-demo"
         options={species}
-        getOptionLabel={(option) => {
-          console.log({ option });
-          return option.name;
-        }}
+        getOptionLabel={(option) => option.name}
         // eslint-disable-next-line react/jsx-props-no-spreading
         renderInput={(params) => <TextField {...params} variant="outlined" label={name} placeholder={name} />}
       />

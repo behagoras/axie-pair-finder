@@ -3,7 +3,9 @@
 /* eslint-disable react/no-unused-prop-types */
 import { Button } from '@material-ui/core';
 import { Formik } from 'formik';
-import React, { ReactElement } from 'react';
+import React, {
+  ReactElement, useEffect, useRef,
+} from 'react';
 import AxieTable from '../components/AxieTable';
 import Filters from '../components/Filters';
 import LayoutGeneFinder from '../components/LayoutGeneFinder';
@@ -13,13 +15,19 @@ import getPrices from '../utils/getPrices';
 // import { getAxies } from '../utils/getAxies';
 
 export default function BreedingParents(props: GeneSearchProps): ReactElement {
+  const onSubmit = useRef(() => {});
   return (
     <Formik
       initialValues={props}
-      onSubmit={() => { }}
+      onSubmit={() => {
+        onSubmit.current();
+      }}
     >
       {({ values, handleSubmit }) => {
-        const pairs = useFilterParents({ values });
+        const { pairs, fetchAllAxies } = useFilterParents({ values });
+        useEffect(() => {
+          onSubmit.current = fetchAllAxies;
+        }, [fetchAllAxies]);
         return (
           <LayoutGeneFinder
             filtersComponent={<Filters />}

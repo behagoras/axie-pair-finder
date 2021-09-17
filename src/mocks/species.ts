@@ -84,7 +84,74 @@ const _mechBeast:any = {
   Ears: ['Aquatic', 'Bird'],
   Eyes: ['Aquatic', 'Bird'],
 };
+
+const _gravelAntPlant:any = {
+  Tail: {
+    name: 'gravel-ant',
+    type: 'bug',
+    expectType: 'ranged',
+    part: 'Tail',
+  },
+  Horn: {
+    name: 'beech',
+    type: 'plant',
+    expectType: 'melee',
+    part: 'Horn',
+  },
+  Back: {
+    name: 'bidens',
+    type: 'plant',
+    expectType: 'support',
+    part: 'Back',
+  },
+  Mouth: {
+    name: 'zigzag',
+    type: 'plant',
+    expectType: 'melee',
+    part: 'Mouth',
+  },
+  // toPrice: '500',
+  species: [
+    'Plant',
+  ],
+
+};
+
+const _birdKamikaze:any = {
+  Tail: {
+    name: 'post-fight',
+    type: 'bug',
+    expectType: 'ranged',
+    part: 'Tail',
+  },
+  Horn: {
+    name: 'eggshell',
+    type: 'plant',
+    expectType: 'melee',
+    part: 'Horn',
+  },
+  Back: {
+    name: 'pigeon-post',
+    type: 'plant',
+    expectType: 'support',
+    part: 'Back',
+  },
+  Mouth: {
+    name: 'doubletalk',
+    type: 'plant',
+    expectType: 'melee',
+    part: 'Mouth',
+  },
+  // toPrice: '500',
+  species: [
+    'Bird',
+  ],
+  Ears: ['Aquatic', 'Bird'],
+  Eyes: ['Aquatic', 'Bird'],
+};
 export const mechBeast: GeneSearchProps = _mechBeast;
 export const poisonDusk: GeneSearchProps = _poisonDusk;
 export const cuckooFish: GeneSearchProps = _cuckooFish;
 export const shielded: GeneSearchProps = _shielded;
+export const gravelAntPlant: GeneSearchProps = _gravelAntPlant;
+export const birdKamikaze: GeneSearchProps = _birdKamikaze;
